@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Would you like to join us on an adventure?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #111;
+    --offwhite: #fafaf8;
+    --pink: #d4537e;
+    --pink-light: #fff0f6;
+    --purple: #7c3aed;
+    --purple-light: #f5f3ff;
+    --purple-dark: #2d1a4a;
+    --yellow: #d97706;
+    --yellow-light: #fffbeb;
+    --green: #0f6e56;
+    --green-light: #e1f5ee;
+    --blue: #0891b2;
+    --blue-light: #ecfeff;
+    --border: 3px solid #111;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+  font-family: 'Space Grotesk', sans-serif;
+  background-color: #fafaf8;
+  background-image: radial-gradient(#ddd 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+  color: var(--black);
+  min-height: 100vh;
+}
+
+  /* ── HEADER ── */
+ .hdr {
+  background-color: #fafaf8;
+  background-image: radial-gradient(#ddd 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+  border-bottom: var(--border);
+  padding: 48px 40px;
+}
+
+.hdr-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  min-height: 340px;
+}
+
+.hdr-left { flex: 1; min-width: 0; }
+
+.hdr-right {
+  flex-shrink: 0;
+  width: 300px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.sticker {
+  border: 3px solid #111;
+  box-shadow: 4px 4px 0 #111;
+  overflow: hidden;
+  background: #eee;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.sticker:hover { box-shadow: 6px 6px 0 #111; }
+
+.sticker img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  display: block;
+}
+
+.sticker.s1 { transform: rotate(3deg); }
+.sticker.s1:hover { transform: rotate(1deg) scale(1.03); }
+
+.sticker.s2 { transform: rotate(-4deg); margin-top: 18px; }
+.sticker.s2:hover { transform: rotate(-2deg) scale(1.03); }
+
+.sticker.s3 { grid-column: 1 / -1; transform: rotate(2deg); }
+.sticker.s3 img { height: 140px; }
+.sticker.s3:hover { transform: rotate(0deg) scale(1.02); }
+
+.sticker-label {
+  background: #111;
+  color: #f1c40f;
+  font-size: 9px;
+  font-weight: 700;
+  text-align: center;
+  padding: 4px 6px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .hdr-inner { flex-direction: column; }
+  .hdr-right { width: 100%; }
+  .sticker img, .sticker.s3 img { height: 110px; }
+}
+
+.hdr-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    background: #ffea00;
+    color: #854f0b;
+    border: var(--border);
+    padding: 4px 14px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+.hdr h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1rem, 4vw, 3rem);
+    font-weight: 800;
+    color: var(--black);
+    line-height: 1.08;
+    margin-bottom: 10px;
+    position: relative;
+    max-width: 560px;
+  }
+
+  .hdr h1 em {
+    font-style: normal;
+    background: #00bfff;
+    padding: 0 7px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hdr h1 u {
+    text-decoration: none;
+    border-bottom: 5px solid #ff0080;
+  }
+ 
+  .hdr-sub {
+    color: #666;
+    font-size: .9rem;
+    position: relative;
+    max-width: 400px;
+  }
+
+
+  /* ── TICKER ── */
+  .ticker {
+    border-top: var(--border);
+    border-bottom: var(--border);
+    overflow: hidden;
+    white-space: nowrap;
+    background: var(--black);
+    padding: 11px 0;
+  }
+
+  .ticker-inner {
+    display: inline-block;
+    animation: tick 28s linear infinite;
+    font-size: .82rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: #fafaf8;
+  }
+
+  @keyframes tick {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .tick-item { display: inline-flex; align-items: center; gap: 14px; margin-right: 14px; }
+  .tick-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #fde68a; flex-shrink: 0; }
+
+  /* ── BODY ── */
+  .body {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 28px 0;
+  }
+
+  .sec-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--purple);
+    border-left: 4px solid var(--purple);
+    padding-left: 10px;
+    margin-bottom: 22px;
+  }
+
+  /* ── FAQ CARD ── */
+  .fc {
+    background: #ffffff;
+    border: var(--border);
+    margin-bottom: 14px;
+    box-shadow: 5px 5px 0 var(--black);
+    transition: transform .15s, box-shadow .15s;
+    cursor: pointer;
+  }
+
+  .fc:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 var(--black);
+  }
+
+  .fc.open {
+    box-shadow: 5px 5px 0 var(--ac);
+  }
+
+  .fq {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 22px;
+    user-select: none;
+  }
+
+  .fnum {
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    min-width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--black);
+    transition: background .2s;
+  }
+
+  .fc.open .fnum { background: var(--ac); }
+
+  .fqt {
+    font-size: .95rem;
+    font-weight: 700;
+    color: var(--black);
+    flex: 1;
+    line-height: 1.45;
+  }
+
+  .fchv {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--black);
+    font-size: .9rem;
+    flex-shrink: 0;
+    transition: transform .25s, background .2s, border-color .2s;
+    background: transparent;
+    color: var(--black);
+    font-weight: 700;
+  }
+
+  .fc.open .fchv {
+    transform: rotate(180deg);
+    background: var(--ac);
+    border-color: var(--ac);
+    color: #fff;
+  }
+
+  .fans {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .38s ease, padding .28s;
+    padding: 0 22px;
+  }
+
+  .fc.open .fans {
+    max-height: 500px;
+    padding: 0 22px 20px;
+  }
+
+  .fans-inner {
+    border-top: var(--border);
+    padding-top: 16px;
+    display: flex;
+    gap: 14px;
+  }
+
+  .fans-bar {
+    width: 4px;
+    flex-shrink: 0;
+    background: var(--ac);
+    border-radius: 2px;
+  }
+
+  .fans-t {
+    font-size: .9rem;
+    line-height: 1.8;
+    color: #333;
+  }
+
+  .fans-t strong {
+    font-weight: 700;
+    color: var(--black);
+    background: var(--acl);
+    padding: 1px 5px;
+  }
+
+  /* ── EMPTY SLOTS ── */
+  .fempty {
+    border: 3px dashed #ccc;
+    background: transparent;
+    box-shadow: none;
+    margin-bottom: 14px;
+    padding: 16px 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #aaa;
+    font-size: .85rem;
+    font-weight: 500;
+    cursor: default;
+    transition: none;
+  }
+
+  .fempty:hover { transform: none; box-shadow: none; }
+
+  .fempty-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: #ccc;
+    border: 2px dashed #ccc;
+    min-width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── GHOST CARD ── */
+  .ghost-card {
+    background: var(--purple-dark);
+    border: var(--border);
+    margin-bottom: 14px;
+    box-shadow: 5px 5px 0 #c8b4f8;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+  }
+
+  .ghost-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 #a78bfa;
+  }
+
+  .ghost-q {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 22px;
+    user-select: none;
+  }
+
+  .ghost-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--purple-dark);
+    background: #c8b4f8;
+    min-width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .ghost-qt {
+    font-size: .95rem;
+    font-weight: 700;
+    color: #e9d5ff;
+    flex: 1;
+    line-height: 1.45;
+  }
+
+  .ghost-chv {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #c8b4f8;
+    font-size: .9rem;
+    flex-shrink: 0;
+    transition: transform .25s;
+    color: #c8b4f8;
+    font-weight: 700;
+  }
+
+  .ghost-card.open .ghost-chv { transform: rotate(180deg); }
+
+  .ghost-ans {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .38s ease, padding .28s;
+    padding: 0 22px;
+  }
+
+  .ghost-card.open .ghost-ans {
+    max-height: 600px;
+    padding: 0 22px 26px;
+  }
+
+  .ghost-ans-inner {
+    border-top: 3px solid #7c3aed;
+    padding-top: 20px;
+    text-align: center;
+  }
+
+  .ghost-svg-wrap {
+    display: inline-block;
+    animation: gfloat 3s ease-in-out infinite;
+  }
+
+  @keyframes gfloat {
+    0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+    50% { transform: translateY(-12px) rotate(1.5deg); }
+  }
+
+  .ghost-stars {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 12px 0 10px;
+  }
+
+  .ghost-star {
+    width: 8px;
+    height: 8px;
+    background: #fde68a;
+    border-radius: 50%;
+    animation: twinkle 1.5s ease-in-out infinite;
+  }
+
+  .ghost-star:nth-child(2) { animation-delay: .4s; background: #f0abfc; }
+  .ghost-star:nth-child(3) { animation-delay: .8s; background: #93c5fd; }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .2; transform: scale(.6); }
+  }
+
+  .ghost-cap {
+    color: #c4b5fd;
+    font-size: .88rem;
+    line-height: 1.75;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+
+  .ghost-cap b { color: #f0abfc; font-weight: 700; }
+
+  /* ── CONTACT ── */
+  .contact-wrap {
+    max-width: 720px;
+    margin: 32px auto 0;
+    padding: 0 28px;
+  }
+
+  .contact-box {
+    background: #fff;
+    border: var(--border);
+    box-shadow: 7px 7px 0 #ff0080;
+    padding: 28px 28px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .contact-left { flex: 1; min-width: 200px; }
+
+  .contact-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--pink);
+    border-left: 4px solid var(--pink);
+    padding-left: 10px;
+    margin-bottom: 8px;
+  }
+
+  .contact-h {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--black);
+    margin-bottom: 6px;
+    line-height: 1.25;
+  }
+
+  .contact-sub {
+    font-size: .84rem;
+    color: #666;
+    line-height: 1.65;
+  }
+
+  .wa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #25D366;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: .9rem;
+    font-weight: 700;
+    padding: 13px 22px;
+    border: var(--border);
+    box-shadow: 4px 4px 0 var(--black);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform .15s, box-shadow .15s;
+    cursor: pointer;
+  }
+
+  .wa-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--black);
+  }
+
+  .wa-btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 var(--black);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 40px;
+    border-top: var(--border);
+    background: var(--black);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .footer-t { font-size: .75rem; color: #666; font-weight: 500; }
+  .footer-m { font-size: .75rem; font-weight: 700; color: #c8b4f8; letter-spacing: .08em; }
+
+  /* ── STAGGER ANIMATION ── */
+  .fc, .fempty, .ghost-card {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp .45s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-left">
+    <div class="hdr-tag">&#128640; MBKM Plupuh &mdash; Oprec 2026</div>
+  <h1>Pertanyaan yang <em>mungkin akan sering</em> <u>ditanyain.</u></h1>
+  <p class="hdr-sub">Klik aja di tiap kolom pertanyaan yang kalian ingin tau jawabannya. Klik semuanya juga gapapa...</p>
+  </div>
+    <div class="hdr-right" aria-hidden="true">
+  <div class="sticker s1">
+      <img src="Meme Ipin.jpg" alt="meme1">
+      <div class="sticker-label">ikut yuk</div>
+    </div>
+    <div class="sticker s2">
+      <img src="Sunset.jpg" alt="meme 2">
+            <div class="sticker-label">Menikmati sunset pinggir sawah Plupuh</div>
+    </div>
+    <div class="sticker s3">
+      <img src="Join Me2.png" alt="meme 3">
+    </div>
+    </div>
+  </div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <span class="ticker-inner">
+    <span class="tick-item"><span class="tick-dot"></span>Currently, there are 3 members, with 7 spots left</span>
+    <span class="tick-item"><span class="tick-dot" style="background:#f0abfc"></span>Currently, there are 3 members, with 7 spots left</span>
+    <span class="tick-item"><span class="tick-dot" style="background:#93c5fd"></span>Currently, there are 3 members, with 7 spots left</span>
+    <span class="tick-item"><span class="tick-dot" style="background:#a7f3d0"></span>Currently, there are 3 members, with 7 spots left</span>
+    <span class="tick-item"><span class="tick-dot" style="background:#fde68a"></span>Currently, there are 3 members, with 7 spots left</span>
+    <span class="tick-item"><span class="tick-dot" style="background:#f7c6e0"></span>Currently, there are 3 members, with 7 spots left</span>
+    <span class="tick-item"><span class="tick-dot" style="background:#c8b4f8"></span>Currently, there are 3 members, with 7 spots left</span>
+    <span class="tick-item"><span class="tick-dot" style="background:#fde68a"></span>Currently, there are 3 members, with 7 spots left</span>
+    <span class="tick-item"><span class="tick-dot" style="background:#93c5fd"></span>Currently, there are 3 members, with 7 spots left</span>
+  </span>
+</div>
+
+<!-- FAQ BODY -->
+<main class="body">
+  <div class="sec-label">Frequently asked questions</div>
+
+  <!-- 01 -->
+  <div class="fc" style="--ac:#d4537e;--acl:#fff0f6;animation-delay:.05s" onclick="tog(this)">
+    <div class="fq">
+      <div class="fnum">01</div>
+      <div class="fqt">Program ini bisa direkognisi apa saja?</div>
+      <div class="fchv">&#8964;</div>
+    </div>
+    <div class="fans">
+      <div class="fans-inner">
+        <div class="fans-bar"></div>
+        <p class="fans-t">Bisa direkognisi sebagai <strong>Magang Reguler</strong>, <strong>MBKM</strong>, dan <strong>KKN</strong>. Beli 1 dapat 2 lagi.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 -->
+  <div class="fc" style="--ac:#7c3aed;--acl:#f5f3ff;animation-delay:.1s" onclick="tog(this)">
+    <div class="fq">
+      <div class="fnum">02</div>
+      <div class="fqt">Kalau sudah punya satu atau dua rekognisi, masih bisa ikut dan rekog yang belum aja?</div>
+      <div class="fchv">&#8964;</div>
+    </div>
+    <div class="fans">
+      <div class="fans-inner">
+        <div class="fans-bar"></div>
+        <p class="fans-t"><strong>Boleh, bisa banget.</strong> Kalo misal sudah MBKM (atau yang lain), terus ikut karena mau rekog Magang Reguler dan KKN aja (atau yang lain) itu bisa. Dengan catatan tetap mengikuti semua agenda yang ada.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 -->
+  <div class="fc" style="--ac:#d97706;--acl:#fffbeb;animation-delay:.15s" onclick="tog(this)">
+    <div class="fq">
+      <div class="fnum">03</div>
+      <div class="fqt">Kapan dan berapa lama programnya?</div>
+      <div class="fchv">&#8964;</div>
+    </div>
+    <div class="fans">
+      <div class="fans-inner">
+        <div class="fans-bar"></div>
+        <p class="fans-t">Berlangsung selama <strong>2 bulan</strong>, dari <strong>September hingga Oktober 2026</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 -->
+  <div class="fc" style="--ac:#0f6e56;--acl:#e1f5ee;animation-delay:.2s" onclick="tog(this)">
+    <div class="fq">
+      <div class="fnum">04</div>
+      <div class="fqt">Dari mana sumber dana dan berapa nominalnya?</div>
+      <div class="fchv">&#8964;</div>
+    </div>
+    <div class="fans">
+      <div class="fans-inner">
+        <div class="fans-bar"></div>
+        <p class="fans-t">Dana berasal dari <strong>hibah MBKM</strong> dengan total maksimal <strong>9&ndash;9-10 juta rupiah</strong>. Dihitungnya setiap anggota mendapat <strong>1 juta</strong>, jadi jumlah totalnya bisa bervariasi tergantung berapa banyak yang ikut. Tapi Prof. Djat bilang anggotanya harus 10 orang, biar dananya bisa turun maksimal.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 -->
+  <div class="fc" style="--ac:#0891b2;--acl:#ecfeff;animation-delay:.25s" onclick="tog(this)">
+    <div class="fq">
+      <div class="fnum">05</div>
+      <div class="fqt">Apakah ada posko menginap, dan apakah wajib ditempati?</div>
+      <div class="fchv">&#8964;</div>
+    </div>
+    <div class="fans">
+      <div class="fans-inner">
+        <div class="fans-bar"></div>
+        <p class="fans-t"><strong>Ada poskonya</strong>, dan menempatinya <strong>tidak wajib</strong>. Kamu bebas pulang-pergi kalau mau. Posko disediakan agar mahasiswa bisa merasakan vibes KKN (kata Prof. Djat) dan demi keselamatan, terutama kalau ada kegiatan sampai sore, lebih aman beristirahat di sana, daripada harus menempuh perjalanan jauh pulang ke rumah (kata Prof. Djat lagi).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 -->
+  <div class="fc" style="--ac:#d4537e;--acl:#fff0f6;animation-delay:.3s" onclick="tog(this)">
+    <div class="fq">
+      <div class="fnum">06</div>
+      <div class="fqt">Kegiatan di SMA Plupuh itu ngapain aja?</div>
+      <div class="fchv">&#8964;</div>
+    </div>
+    <div class="fans">
+      <div class="fans-inner">
+        <div class="fans-bar"></div>
+        <p class="fans-t">Agenda utamanya <strong>mengajar siswa menulis Teks Anekdot</strong>. Selain itu, mahasiswa kemungkinan dimintai tolong (bisa aja mengajar bahasa Inggris, atau yang lain) sama guru bahasa Inggris yang ada di sana, soalnya guru bahasa Inggrsinya cuman ada satu.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 -->
+  <div class="fc" style="--ac:#7c3aed;--acl:#f5f3ff;animation-delay:.35s" onclick="tog(this)">
+    <div class="fq">
+      <div class="fnum">07</div>
+      <div class="fqt">KKN-nya di mana dan kegiatannya seperti apa?</div>
+      <div class="fchv">&#8964;</div>
+    </div>
+    <div class="fans">
+      <div class="fans-inner">
+        <div class="fans-bar"></div>
+        <p class="fans-t">KKN dilakukan di area sekitar posko — cukup <strong>satu RT</strong> aja tidak apa, tidak perlu mencakup satu desa penuh. Program didiskusikan bersama anggota, tapi lebih disarankan <strong>mengikuti yang sudah berjalan</strong> daripada membuat program baru (mempertimbangkan dana yang terbatas dan partisipan warganya). Kantor desa juga sesekali minta bantuan, terutama di bidang IT.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMPTY SLOTS -->
+  <div class="fempty" style="animation-delay:.4s">
+    <div class="fempty-num">08</div>
+    <span>Empty slot untuk pertanyaan dan informasi mendatang...</span>
+  </div>
+  <div class="fempty" style="animation-delay:.45s">
+    <div class="fempty-num">09</div>
+    <span>Empty slot untuk pertanyaan dan informasi mendatang...</span>
+  </div>
+  <div class="fempty" style="animation-delay:.5s">
+    <div class="fempty-num">10</div>
+    <span>Empty slot untuk pertanyaan dan informasi mendatang...</span>
+  </div>
+
+  <!-- GHOST CARD -->
+  <div class="ghost-card" style="animation-delay:.55s" onclick="togGhost(this)">
+    <div class="ghost-q">
+      <div class="ghost-num">11</div>
+      <div class="ghost-qt">Apa kekurangan dari mengikuti kegiatan ini?</div>
+      <div class="ghost-chv">&#8964;</div>
+    </div>
+    <div class="ghost-ans">
+      <div class="ghost-ans-inner">
+        <div class="ghost-svg-wrap">
+          <svg width="110" height="116" viewBox="0 0 110 116" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="55" cy="48" rx="34" ry="36" fill="#f0e6ff" opacity=".96"/>
+            <rect x="21" y="48" width="68" height="42" fill="#f0e6ff" opacity=".96"/>
+            <path d="M21 90 Q30 104 39 90 Q48 76 55 90 Q62 104 71 90 Q80 76 89 90 L89 97 Q80 83 71 97 Q62 111 55 97 Q48 83 39 97 Q30 111 21 97 Z" fill="#f0e6ff" opacity=".96"/>
+            <ellipse cx="42" cy="46" rx="8" ry="9" fill="#7c3aed"/>
+            <ellipse cx="68" cy="46" rx="8" ry="9" fill="#7c3aed"/>
+            <ellipse cx="42" cy="47" rx="4" ry="4.5" fill="#2d1a4a"/>
+            <ellipse cx="68" cy="47" rx="4" ry="4.5" fill="#2d1a4a"/>
+            <circle cx="44.5" cy="44.5" r="2" fill="white"/>
+            <circle cx="70.5" cy="44.5" r="2" fill="white"/>
+            <path d="M46 62 Q55 69 64 62" stroke="#d4537e" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+            <ellipse cx="30" cy="58" rx="7" ry="3.5" fill="#f0abfc" opacity=".5"/>
+            <ellipse cx="80" cy="58" rx="7" ry="3.5" fill="#f0abfc" opacity=".5"/>
+            <ellipse cx="8" cy="62" rx="10" ry="8" fill="#f0e6ff" opacity=".92" transform="rotate(-15 8 62)"/>
+            <ellipse cx="102" cy="62" rx="10" ry="8" fill="#f0e6ff" opacity=".92" transform="rotate(15 102 62)"/>
+          </svg>
+        </div>
+        <div class="ghost-stars">
+          <div class="ghost-star"></div>
+          <div class="ghost-star"></div>
+          <div class="ghost-star"></div>
+        </div>
+          <p class="ghost-cap">Pas di posko, you might meet one of em🧟</p>
+  </div>
+</main>
+
+<!-- CONTACT -->
+<section class="contact-wrap">
+  <div class="contact-box">
+    <div class="contact-left">
+      <div class="contact-tag">Kalo masih ada yang mau ditanyakan,</div>
+      <div class="contact-h">Kontak Yesy aja.</div>
+      <p class="contact-sub">Tinggal klik ikon WhatsApp di samping >>></p>
+    </div>
+    <a class="wa-btn" href="https://wa.me/6281326752170?text=Hi%20Yes%2C%20aku%20mau%20bertanya%20terkait%20Plupuh!" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.549 4.122 1.515 5.855L.057 23.882a.5.5 0 0 0 .612.612l6.085-1.464A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.695-.538-5.218-1.473l-.375-.228-3.883.936.952-3.813-.247-.392A9.969 9.969 0 0 1 2 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/>
+      </svg>
+      Chat via WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-t">Pusat Literasi Unggul, Produktif, Ulet, dan Humanis</span>
+  <span class="footer-m">Join Dong!</span>
+</footer>
+
+<script>
+  function tog(card) {
+    const isOpen = card.classList.contains('open');
+    document.querySelectorAll('.fc.open').forEach(c => c.classList.remove('open'));
+    if (!isOpen) card.classList.add('open');
+  }
+
+  function togGhost(card) {
+    card.classList.toggle('open');
+  }
+</script>
+
+</body>
+</html> 
